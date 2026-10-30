@@ -1,0 +1,75 @@
+
+### Create a post (login first)
+POST http://localhost:5000/api/posts
+Content-Type: application/json
+
+{
+  "title": "My First Blog Post",
+  "content": "This is my first post using the Express and PostgreSQL blog API."
+}
+
+### Get all posts
+GET http://localhost:5000/api/posts?page=1&limit=10
+
+### Get a single post
+GET http://localhost:5000/api/posts/1
+
+
+
+### Update your post
+PUT http://localhost:5000/api/posts/1
+Content-Type: application/json
+
+{
+  "title": "Updated Blog Post",
+  "content": "I updated my first blog post."
+}
+
+### Delete your post
+DELETE http://localhost:5000/api/posts/2
+
+
+### Create a comment
+POST http://localhost:5000/api/comments/post/3
+Content-Type: application/json
+
+{
+  "content": "Great post! Thanks for sharing."
+}
+
+### Get comments for a post
+GET http://localhost:5000/api/comments/post/3
+
+### Update a comment
+PUT http://localhost:5000/api/comments/1
+Content-Type: application/json
+
+{
+  "content": "Really helpful post!"
+}
+
+### Delete a comment
+DELETE http://localhost:5000/api/comments/2
+
+
+
+### Like a post
+POST http://localhost:5000/api/likes/post/3
+
+### View likes
+GET http://localhost:5000/api/likes/post/3
+
+### Unlike a post
+DELETE http://localhost:5000/api/likes/post/3
+
+### View likes again
+GET http://localhost:5000/api/likes/post/3
+
+
+### Successful request
+GET http://localhost:5000/api/posts
+
+### Not found
+GET http://localhost:5000/api/posts/999999
+
+

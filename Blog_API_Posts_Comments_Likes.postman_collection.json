@@ -1,0 +1,219 @@
+{
+  "info": {
+    "name": "Blog API - Posts, Comments & Likes",
+    "description": "Import into Postman. Log in first before running protected requests so Postman can use your session cookie. Change IDs in collection variables to match your database. Delete requests are destructive.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Create a post (login first)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"My First Blog Post\",\n  \"content\": \"This is my first post using the Express and PostgreSQL blog API.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/posts"
+          }
+        },
+        {
+          "name": "Get all posts (paginated)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/posts?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get a single post",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/posts/{{postId}}"
+          }
+        },
+        {
+          "name": "Update your post",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Blog Post\",\n  \"content\": \"I updated my first blog post.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/posts/{{postId}}"
+          }
+        },
+        {
+          "name": "Delete a post (destructive)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/posts/{{deletePostId}}"
+          }
+        },
+        {
+          "name": "Successful request - get posts",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/posts"
+          }
+        },
+        {
+          "name": "Not found - post ID 999999",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/posts/999999"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "Create a comment on post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Great post! Thanks for sharing.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/comments/post/{{commentPostId}}"
+          }
+        },
+        {
+          "name": "Get comments for a post",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/comments/post/{{commentPostId}}"
+          }
+        },
+        {
+          "name": "Update a comment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Really helpful post!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/comments/{{commentId}}"
+          }
+        },
+        {
+          "name": "Delete a comment (destructive)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/comments/{{deleteCommentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Likes",
+      "item": [
+        {
+          "name": "Like a post",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/likes/post/{{likePostId}}"
+          }
+        },
+        {
+          "name": "View likes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/likes/post/{{likePostId}}"
+          }
+        },
+        {
+          "name": "Unlike a post",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/likes/post/{{likePostId}}"
+          }
+        },
+        {
+          "name": "View likes again",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/likes/post/{{likePostId}}"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "postId",
+      "value": "1"
+    },
+    {
+      "key": "deletePostId",
+      "value": "2"
+    },
+    {
+      "key": "commentPostId",
+      "value": "3"
+    },
+    {
+      "key": "commentId",
+      "value": "1"
+    },
+    {
+      "key": "deleteCommentId",
+      "value": "2"
+    },
+    {
+      "key": "likePostId",
+      "value": "3"
+    }
+  ]
+}

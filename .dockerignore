@@ -1,0 +1,40 @@
+
+# Dependencies (install inside the image)
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Git
+.git/
+.gitignore
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build and test output
+coverage/
+.nyc_output/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+docs/
+
+# Temporary files
+tmp/
+temp/
+
+# Docker files not needed in the build context
+Dockerfile*
+docker-compose*.yml
+.dockerignore

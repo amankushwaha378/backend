@@ -1,0 +1,167 @@
+
+@baseUrl = http://localhost:5000
+@userId = 5
+@invalidUserId = 999999
+
+### 1. Get the existing post count before testing
+GET {{baseUrl}}/api/optimization/users/{{userId}}/post-count
+
+
+### 2. TRANSACTION: Successful post creation
+POST {{baseUrl}}/api/optimization/transaction-post
+Content-Type: application/json
+
+{
+  "title": "Transaction Success Test",
+  "content": "This post should be saved.",
+  "userId": {{userId}}
+}
+
+
+### 3. TRANSACTION: Force failure after INSERT
+POST {{baseUrl}}/api/optimization/transaction-post
+Content-Type: application/json
+
+{
+  "title": "Transaction Rollback Test",
+  "content": "This post must not persist.",
+  "userId": {{userId}},
+  "simulateFailure": true
+}
+
+
+### 4. TRANSACTION: Verify rollback
+GET {{baseUrl}}/api/optimization/users/{{userId}}/post-count
+
+
+### 5. TRANSACTION: Invalid user ID (foreign key violation)
+POST {{baseUrl}}/api/optimization/transaction-post
+Content-Type: application/json
+
+{
+  "title": "Invalid User Transaction",
+  "content": "This should fail.",
+  "userId": {{invalidUserId}}
+}
+
+
+### 6. TRANSACTION: Missing title
+POST {{baseUrl}}/api/optimization/transaction-post
+Content-Type: application/json
+
+{
+  "content": "Title is missing.",
+  "userId": {{userId}}
+}
+
+
+### 7. TRANSACTION: Empty title
+POST {{baseUrl}}/api/optimization/transaction-post
+Content-Type: application/json
+
+{
+  "title": "   ",
+  "content": "Content is present.",
+  "userId": {{userId}}
+}
+
+
+### 8. TRANSACTION: Title exceeds 200 characters
+POST {{baseUrl}}/api/optimization/transaction-post
+Content-Type: application/json
+
+{
+  "title": "This title is intentionally longer than the maximum allowed length of two hundred characters so that the request should be rejected by the Express validation before any database insert can happen. Extra characters are included here to exceed the limit.",
+  "content": "Testing title length.",
+  "userId": {{userId}}
+}
+
+
+### 9. TRANSACTION: Invalid user ID type
+POST {{baseUrl}}/api/optimization/transaction-post
+Content-Type: application/json
+
+{
+  "title": "Invalid User Type",
+  "content": "User ID should be an integer.",
+  "userId": "abc"
+}
+
+
+### 10. STORED PROCEDURE: Successful post creation
+POST {{baseUrl}}/api/optimization/procedure-post
+Content-Type: application/json
+
+{
+  "title": "Stored Procedure Success",
+  "content": "Created using a PostgreSQL procedure.",
+  "userId": {{userId}}
+}
+
+
+### 11. STORED PROCEDURE: Force failure after INSERT
+POST {{baseUrl}}/api/optimization/procedure-post
+Content-Type: application/json
+
+{
+  "title": "Stored Procedure Rollback",
+  "content": "This post must not persist.",
+  "userId": {{userId}},
+  "simulateFailure": true
+}
+
+
+### 12. STORED PROCEDURE: Invalid user ID
+POST {{baseUrl}}/api/optimization/procedure-post
+Content-Type: application/json
+
+{
+  "title": "Procedure Invalid User",
+  "content": "This should fail due to the foreign key.",
+  "userId": {{invalidUserId}}
+}
+
+
+### 13. STORED PROCEDURE: Missing content
+POST {{baseUrl}}/api/optimization/procedure-post
+Content-Type: application/json
+
+{
+  "title": "Missing Content",
+  "userId": {{userId}}
+}
+
+
+### 14. STORED PROCEDURE: Invalid failure flag type
+POST {{baseUrl}}/api/optimization/procedure-post
+Content-Type: application/json
+
+{
+  "title": "Invalid Failure Flag",
+  "content": "Testing request validation.",
+  "userId": {{userId}},
+  "simulateFailure": "true"
+}
+
+
+### 15. STORED PROCEDURE: Title exceeds 200 characters
+POST {{baseUrl}}/api/optimization/procedure-post
+Content-Type: application/json
+
+{
+  "title": "This title is intentionally longer than the maximum allowed length of two hundred characters so that the request should be rejected by the Express validation before any database insert can happen. Extra characters are included here to exceed the limit.",
+  "content": "Testing title length.",
+  "userId": {{userId}}
+}
+
+
+### 16. STORED FUNCTION: Get actual post count
+GET {{baseUrl}}/api/optimization/users/{{userId}}/post-count
+
+
+### 17. STORED FUNCTION: Invalid user ID in URL
+GET {{baseUrl}}/api/optimization/users/abc/post-count
+
+
+### 18. STORED FUNCTION: Zero user ID
+GET {{baseUrl}}/api/optimization/users/0/post-count

@@ -1,0 +1,82 @@
+### Create User
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "name": "test",
+  "email": "kasis41197@herclan.com",
+  "age": 45
+}
+
+### Get Users
+GET http://localhost:5000/api/users
+
+
+### Get User
+GET http://localhost:5000/api/users/3
+
+
+### Update User
+PUT http://localhost:5000/api/users/1
+Content-Type: application/json
+
+{
+  "name": "Aman Kushwaha",
+  "email": "aman@examples.com",
+  "age": 22
+}
+
+
+### Delete User
+DELETE http://localhost:5000/api/users/3
+
+
+### Get Users - Page 1
+GET http://localhost:5000/api/users?page=2&limit=1
+
+
+
+### Get Users - Page 1
+GET http://localhost:5000/api/users?sortBy=age&order=desc
+
+
+### Register User
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Rahul",
+  "email": "bedir23354@iconcubic.com",
+  "age": 22,
+  "password": "SecurePass123"
+}
+
+
+### Login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "bedir23354@iconcubic.com",
+  "password": "AmanMemighty!"
+}
+
+
+### Access protected route
+GET http://localhost:5000/api/auth/me
+
+
+### Logout
+POST http://localhost:5000/api/auth/logout
+
+
+
+
+
+### Test custom rate limiter
+GET http://localhost:5000/api/test-rate-limit
+
+
+
+### Test express-rate-limit
+GET http://localhost:5000/api/test-library-rate-limit
